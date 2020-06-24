@@ -9,7 +9,7 @@ node{
     stage("Create Image"){
         // Build docker image using Dockerfile
         sh '''
-            ./jenkins/docker/build/imageBuild.sh
+            ./jenkins/docker/build/buildImage.sh
         '''
     }
 

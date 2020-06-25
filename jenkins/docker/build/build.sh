@@ -7,7 +7,6 @@ WORKDIR=$PWD
 docker container run \
        --rm \
        --name mvn-build \
-       --volume $WORKDIR:/app \
-       --volume $JENKINS_HOME/.m2:/root/.m2 \
-       --workdir /app \
+       --volume-from $(docker container ls -q --filter name=_jenkins.1) \
+       --workdir $PWD \
        maven:3.6.3-jdk-8 "$@"

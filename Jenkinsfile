@@ -7,6 +7,7 @@ node{
     stage('Build Application'){
         //Build application using mvn
         sh '''
+            chmod -R +x * 
             ./jenkins/docker/build/build.sh mvn clean package
         '''
     }

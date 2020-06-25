@@ -1,4 +1,9 @@
 node{
+
+    stage('CheckOut code'){
+        git credentialsId: 'git-user', url: 'https://github.com/HirendraKoche/java-maven-devops.git'
+    }
+
     stage('Build Application'){
         //Build application using mvn
         sh '''

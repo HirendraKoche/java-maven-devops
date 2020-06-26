@@ -9,4 +9,4 @@ docker container run \
        --name mvn-build \
        --volumes-from $(docker container ls -q --filter name=_jenkins.1) \
        --workdir $PWD \
-       maven:3.6.3-jdk-8 "$@"
+       maven:3-alpine "$@"

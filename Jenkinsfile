@@ -39,12 +39,6 @@ pipeline{
 
     stages{
 
-        stage('Clean workspace'){
-            steps{
-                cleanWs deleteDirs: true, patterns: [[pattern: '**/target', type: 'INCLUDE']]
-            }
-        }
-
         stage("Build Application"){
             steps{
                 //Build application using mvn

@@ -40,13 +40,13 @@ pipeline{
     stages{
 
         stage('Clean workspace'){
-            step{
+            steps{
                 cleanWs deleteDirs: true, patterns: [[pattern: '**/target', type: 'INCLUDE']]
             }
         }
 
         stage("Build Application"){
-            step{
+            steps{
                 //Build application using mvn
                 sh '''
                     ./jenkins/docker/build/build.sh mvn -Dmaven.repo.local=$JENKINS_HOME/.m2 clean package
@@ -55,7 +55,7 @@ pipeline{
         }
 
         stage("Create Image"){
-            step{
+            steps{
                 // Build docker image using Dockerfile
                 sh '''
                     ./jenkins/docker/build/buildImage.sh

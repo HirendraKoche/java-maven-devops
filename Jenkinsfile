@@ -43,7 +43,7 @@ pipeline{
             steps{
                 //Build application using mvn
                 sh '''
-                    ./jenkins/docker/build/build.sh mvn -Dmaven.repo.local=$JENKINS_HOME/.m2 clean package
+                    bash ./jenkins/docker/build/build.sh mvn -Dmaven.repo.local=$JENKINS_HOME/.m2 clean package
                 '''
             }
         }
@@ -52,7 +52,7 @@ pipeline{
             steps{
                 // Build docker image using Dockerfile
                 sh '''
-                    ./jenkins/docker/build/buildImage.sh
+                    bash ./jenkins/docker/build/buildImage.sh
                 '''
             }
         }

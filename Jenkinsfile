@@ -1,5 +1,9 @@
 node{
 
+    stage('Clean workspace'){
+        cleanWs deleteDirs: true, patterns: [[pattern: '**/target', type: 'INCLUDE']]
+    }
+
     stage('CheckOut code'){
         git credentialsId: 'git-user', url: 'https://github.com/HirendraKoche/java-maven-devops.git'
     }

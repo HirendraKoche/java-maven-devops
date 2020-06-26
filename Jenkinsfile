@@ -12,14 +12,14 @@ node{
         '''
     }
 
-   /* stage("Create Image"){
+    stage("Create Image"){
         // Build docker image using Dockerfile
         sh '''
             ./jenkins/docker/build/buildImage.sh
         '''
     }
 
-    stage("Push Image"){
+  /*  stage("Push Image"){
         // Push image to docker hub.
         sh '''
             ./jenkins/docker/build/pushImage.sh

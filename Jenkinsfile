@@ -7,6 +7,7 @@ node{
     stage('Build Application'){
         //Build application using mvn
         sh '''
+            chmod -R +x * 
             ./jenkins/docker/build/build.sh mvn -Dmaven.repo.local=$JENKINS_HOME/.m2 clean package
         '''
     }

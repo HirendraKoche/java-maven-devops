@@ -2,7 +2,7 @@
 
 # Start docker maven container
 
-WORKDIR=$PWD
+#WORKDIR=$PWD
 
 docker container run \
        --rm \

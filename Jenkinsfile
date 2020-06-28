@@ -63,7 +63,7 @@ pipeline{
                 sh '''
                     ./jenkins/docker/deploy/updateImageInDockerCompose.sh
                     git add docker-compose.yml
-                    git commit -m "Updated image tag in docker-compose.yml"
+                    git commit -am "Updated image tag in docker-compose.yml"
                     git push origin master
                 '''
             }

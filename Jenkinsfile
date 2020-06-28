@@ -57,6 +57,14 @@ pipeline{
             }
         }
 
+        stage("Publish Artifacts"){
+            // Publish Artifacts.
+            steps{
+                archiveArtifacts artifacts:'**/target/*.war, **/target/*.jar', onlyIfSuccessful: true, caseSensitive: false
+            }
+
+        }
+
         /*stage("Push Image"){
             // Push image to docker hub.
 

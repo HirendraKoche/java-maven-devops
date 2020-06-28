@@ -1,0 +1,11 @@
+version: '3.0'
+
+services:
+    java_maven_devops:
+        image: hirendrakoche/java_maven_devops:7
+        ports:
+            - "8081:8080"
+        networks:
+            - java_maven_devops
+networks:
+    - java_maven_devops:

@@ -57,6 +57,18 @@ pipeline{
             }
         }
 
+        stage("Update docker-compose and push to git"){
+            steps{
+                // Update docker-compose and push docker-compose to git
+                sh '''
+                    ./jenkins/docker/deploy/updateImageInDockerCompose.sh
+                    git add docker-compose.yml
+                    git commit -m "Updated image tag in docker-compose.yml"
+                    git push origin master
+                '''
+            }
+        }
+
         stage('Publish Artifacts'){
             // Publish Artifacts.
             steps{

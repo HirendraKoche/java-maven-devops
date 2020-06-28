@@ -57,7 +57,7 @@ pipeline{
             }
         }
 
-        stage("Publish Artifacts"){
+        stage('Publish Artifacts'){
             // Publish Artifacts.
             steps{
                 archiveArtifacts artifacts:'**/target/*.war, **/target/*.jar', onlyIfSuccessful: true, caseSensitive: false

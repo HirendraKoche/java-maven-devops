@@ -64,6 +64,7 @@ pipeline{
                     ./jenkins/docker/deploy/updateImageInDockerCompose.sh
                     git config --global user.email "hirendrakoche1@outlook.com"
                     git config --global user.name "hirendrakoche"
+                    chown -R $(whoami) .
                     git add docker-compose.yml
                     git commit -am "Updated image tag in docker-compose.yml"
                     git push origin master

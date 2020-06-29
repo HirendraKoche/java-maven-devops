@@ -29,6 +29,9 @@ pipeline{
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
+            post{
+                success{ dockerImage.push('','docker-hub-user') }
+            }
         }
     }
 }

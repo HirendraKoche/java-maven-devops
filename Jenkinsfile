@@ -34,7 +34,7 @@ pipeline{
                 success{ 
                     script{
                         docker.withRegistry('','docker-hub-user'){
-                            dockerImage.push('latest')
+                            dockerImage.push()
                         } 
                     }
                 }

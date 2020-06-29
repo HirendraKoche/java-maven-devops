@@ -37,7 +37,7 @@ pipeline{
 
     environment {
         registry = 'hirendrakoche/java_maven_devops'
-        registryCredential = credentialsId('docker-hub-user')
+        registryCredential = credentials('docker-hub-user')
         customImage = ''
     }
     agent any
@@ -70,7 +70,7 @@ pipeline{
                //     bash ./jenkins/docker/build/buildImage.sh
                 //'''
                 script{
-                    docker.build("${env.registry}:${env.BUILD_NUMBER}")
+                    customImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
         }

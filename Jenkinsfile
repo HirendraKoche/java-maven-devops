@@ -35,7 +35,7 @@
 
 pipeline{
 
-    environtment {
+    environment {
         registry = 'hirendrakoche/java_maven_devops'
         registryCredential = credentialsId('docker-hub-user')
         customImage = ''

@@ -17,6 +17,10 @@ pipeline{
                 }
             }
             steps{ sh 'mvn clean install' }
+            post{
+                always{ junit 'server/target/surefire-reports/*.xml' }
+                success{ archiveArtifacts artifacts: '**/target/*.war, **/target/*.jar', caseSensitive: false, fingerprint: true}
+            }
         }
     }
 }

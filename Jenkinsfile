@@ -36,7 +36,7 @@ pipeline{
                         docker.withRegistry('','docker-hub-user'){
                             dockerImage.push()
                         } 
-                        sh "docker image rm ${dockerImage.Id}"
+                        sh "docker image rm ${dockerImage.imageId()}"
                     }
                 }
             }

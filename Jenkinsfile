@@ -22,6 +22,7 @@ pipeline{
                 success{ archiveArtifacts artifacts: '**/target/*.war, **/target/*.jar', caseSensitive: false, fingerprint: true}
             }
         }
+
         stage('Build Docker Image'){
             agent any
             steps{
@@ -30,7 +31,13 @@ pipeline{
                 }
             }
             post{
-                success{ dockerImage.push('','docker-hub-user') }
+                success{ 
+                    script{
+                        docker.withRegistry('','docker-hub-user'){
+                            dockerImage.push()
+                        } 
+                    }
+                }
             }
         }
     }

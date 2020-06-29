@@ -58,20 +58,22 @@ pipeline{
                // '''
 
                sh 'mvn clean install'
-            }
-        }
-
-        stage("Create Image"){
-            steps{
-                // Build docker image using Dockerfile
-               // sh '''
-               //     bash ./jenkins/docker/build/buildImage.sh
-                //'''
-                script{
+               
+               script{
                     customImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
         }
+
+       // stage("Create Image"){
+       //     steps{
+       //         // Build docker image using Dockerfile
+       //        // sh '''
+               //     bash ./jenkins/docker/build/buildImage.sh
+       //         //'''
+                
+       //     }
+       // }
 
         stage("Update docker-compose and push to git"){
             steps{

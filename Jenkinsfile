@@ -45,23 +45,17 @@ pipeline{
     stages{
 
         stage("Build Application"){
-            agent{
-                docker{
-                    image 'maven:3-alpine'
-                    args '-v $HOME/.m2:/root/.m2'
-                }
-            }
+            
             steps{
                 //Build application using mvn
                // sh '''
                //    bash ./jenkins/docker/build/build.sh mvn -Dmaven.repo.local=$JENKINS_HOME/.m2 clean install
                // '''
-
-               sh 'mvn clean install'
-               
-               script{
-                    customImage = docker.build("$registry:$BUILD_NUMBER")
-                }
+               script {
+                   withMaven(maven:'jenkins-maven')
+                       sh 'mvn clean install'
+                   }
+               }
             }
         }
 

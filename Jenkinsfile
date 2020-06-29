@@ -16,18 +16,7 @@ pipeline{
                     args '-v $HOME/.m2:/root/.m2'
                 }
             }
-            steps{
-                sh 'mvn clean install'
-            }
+            steps{ sh 'mvn clean install' }
         }
-        //stage('Build image'){
-        //    agent any
-        //    steps{
-        //        script{
-         //           dockerImage = docker.build("$registry:$BUILD_NUMBER")
-         //       }
-         //   }
-        //}
-
     }
 }

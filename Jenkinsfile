@@ -48,7 +48,7 @@ pipeline{
             agent{
                 docker{
                     image 'maven:3-alpine'
-                    args '-v $JENKINS_HOME/.m2:/root/.m2'
+                    args '-v $HOME/.m2:/root/.m2'
                 }
             }
             steps{

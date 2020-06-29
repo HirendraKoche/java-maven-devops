@@ -36,6 +36,7 @@ pipeline{
                         docker.withRegistry('','docker-hub-user'){
                             dockerImage.push()
                         } 
+                        echo "docker image rm $dockerImage"
                     }
                 }
             }

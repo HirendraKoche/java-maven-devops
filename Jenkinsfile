@@ -45,7 +45,7 @@ pipeline{
     }
     post{
         success{
-            emailext to: 'hirendrakoche1@outlook.com', subject: "$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS", body: '''Hi,
+            emailext to: 'hirendrakoche1@outlook.com', subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS', body: '''Hi,
             Build process is completed. If you wanted to deploy application, please follow below link:
             ${BUILD_URL}input
             Please follow below link for Build logs:

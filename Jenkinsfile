@@ -53,7 +53,6 @@ pipeline{
         }
 
         stage('Build Docker Image'){
-            agent any
             steps{
                 script{
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
@@ -73,7 +72,6 @@ pipeline{
         }
 
         stage('Deploy Build'){
-            agent any
             steps{
                 emailext to: 'hirendrakoche1@outlook.com', subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS', body: '''Hi,\nBuild process is completed. If you wanted to deploy application, please follow below link:\n${BUILD_URL}input\nPlease follow below link for Build logs:\n${BUILD_URL}console'''
 

@@ -40,16 +40,7 @@ pipeline{
 
                         jiraResponse = jiraNewIssue issue: newIssue, site: 'jira'
 
-                        def notify = [
-							fields: [
-								to: [
-									assignee: true,
-									reporter: true
-								]
-							]
-						]
-
-						jiraNotifyIssue idOrKey: jiraResponse.data.key, notify: notify, site: 'jira' 
+						jiraNotifyIssue idOrKey: jiraResponse.data.key, site: 'jira' 
                     }
                 }
             }

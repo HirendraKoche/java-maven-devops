@@ -73,7 +73,6 @@ pipeline{
                 }
             }
         }
-        agent any
     }
     post{
         success{

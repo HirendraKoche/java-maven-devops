@@ -87,6 +87,8 @@ pipeline{
             input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'
 
             ansiColor('xterm'){
+                agent any
+                
                 ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/deploy/ansible/hosts', playbook: 'jenkins/deploy/ansible/deploy.yml'
             }
         }

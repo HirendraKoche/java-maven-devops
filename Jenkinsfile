@@ -8,7 +8,6 @@ pipeline{
     agent none
 
     stages{
-
         stage('Build App'){
             agent{
                 docker{
@@ -16,9 +15,7 @@ pipeline{
                     args '-v $JENKINS_HOME/.m2:/root/.m2'
                 }
             }
-            steps{ 
-                sh 'mvn clean install'
-            }
+            steps{ sh 'mvn clean install' }
 
             post{
                 always{ junit '**/target/surefire-reports/*.xml' }
@@ -56,6 +53,7 @@ pipeline{
         }
 
         stage('Build Docker Image'){
+            agent any
             steps{
                 script{
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
@@ -73,19 +71,14 @@ pipeline{
                 }
             }
         }
-    }
-    post{
-        success{
-            emailext to: 'hirendrakoche1@outlook.com', subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS', body: '''Hi,
-            Build process is completed. If you wanted to deploy application, please follow below link:
-            ${BUILD_URL}input
-            Please follow below link for Build logs:
-            ${BUILD_URL}console
-            '''
 
-            input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'
-            
-            node {
+        stage('Deploy Build'){
+            agent any
+            steps{
+                emailext to: 'hirendrakoche1@outlook.com', subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS', body: '''Hi,\nBuild process is completed. If you wanted to deploy application, please follow below link:\n${BUILD_URL}input\nPlease follow below link for Build logs:\n${BUILD_URL}console'''
+
+                input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'
+
                 ansiColor('xterm'){
                     ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/deploy/ansible/hosts', playbook: 'jenkins/deploy/ansible/deploy.yml'
                 }

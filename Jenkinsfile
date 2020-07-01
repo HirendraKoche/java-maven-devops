@@ -13,14 +13,46 @@ pipeline{
             agent{
                 docker{
                     image 'maven:3.5.0'
-                    args '-v $HOME/.m2:/root/.m2'
+                    args '-v $JENKINS_HOME/.m2:/root/.m2'
                 }
             }
             steps{ sh 'mvn clean install' }
 
             post{
                 always{ junit '**/target/surefire-reports/*.xml' }
+                
                 success{ archiveArtifacts artifacts: '**/target/*.war, **/target/*.jar', caseSensitive: false, fingerprint: true}
+                
+                failure{
+                    script{
+                        def newIssue = [
+                            fields: [
+                                project: [key: ''],
+                                summary: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS',
+                                description: 'Build failed. Please check logs at ${BUILD_URL}console',
+                                issueType: [name: 'Bug'],
+                                priority: [name: 'High'],
+                                components: [[ name: 'User Interface' ]]
+                            ]
+                        ]
+
+                        jiraResponse = jiraNewIssue issue: newIssue, site: 'jira'
+
+                        def notify = [
+							fields: [
+								subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS',
+								textBody: "Build failed. Jira issue" + jiraResponse.data.key + " has been created.",
+								htmlBody: "Build failed. Jira issue" + jiraResponse.data.key + " has been created.",
+								to: [
+									assignee: true,
+									reporter: true
+								]
+							]
+						]
+
+						jiraNotifyIssue idOrKey: jiraResponse.data.key, notify: notify, site: 'jira' 
+                    }
+                }
             }
         }
 
@@ -49,7 +81,7 @@ pipeline{
             Build process is completed. If you wanted to deploy application, please follow below link:
             ${BUILD_URL}input
             Please follow below link for Build logs:
-            ${BUILD_URL}
+            ${BUILD_URL}console
             '''
 
             input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'

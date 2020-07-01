@@ -68,7 +68,7 @@ pipeline{
                         docker.withRegistry('','docker-hub-user'){
                             dockerImage.push()
                         }
-                        sh './jenkins/docker/deploy/updateImageInDocker.sh'
+                        sh './jenkins/docker/deploy/updateImageInDockerCompose.sh'
                         sh "docker image rm ${dockerImage.id}"
                     }
                 }
@@ -86,7 +86,7 @@ pipeline{
 
             input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'
 
-            
+
         }
     }
 }

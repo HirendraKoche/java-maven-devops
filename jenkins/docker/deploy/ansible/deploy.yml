@@ -1,0 +1,20 @@
+---
+   - hosts: docker-master
+
+     tasks:
+        - name: "Create folder java_maven_devops"
+          file:
+             path: $HOME/java_maven_devops
+             state: directory
+
+        - name: "Copy docker-compose"
+          template:
+             src: docker-compose.yml
+             dest: $HOME/java_maven_devops
+        
+        - name: "Deploy deock-compose"
+          docker_stack:
+             stage: present
+             name: java_maven_devops
+             compose:
+                - ~/docker-compose.yml

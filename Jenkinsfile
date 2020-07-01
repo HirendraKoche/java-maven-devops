@@ -3,7 +3,6 @@ pipeline{
     environment{
         registry = 'hirendrakoche/java_maven_devops'
         dockerImage = ''
-        BUILD_RESULT = ''
     }
    
     agent none
@@ -19,7 +18,6 @@ pipeline{
             }
             steps{ 
                 sh 'mvn clean insta'
-                BUILD_RESULT = $BUILD_STATUS
             }
 
             post{
@@ -32,7 +30,7 @@ pipeline{
                         def newIssue = [
                             fields: [
                                 project: [ key: 'JAVA' ],
-                                summary: """${JOB_NAME} #${BUILD_NUMBER}: ${env.BUILD_RESULT}""",
+                                summary: '''$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS''',
                                 description: "Build failed. Please check logs at ${BUILD_URL}console",
                                 issuetype: [ name: 'Bug' ],
                                 priority: [ name: 'High' ],

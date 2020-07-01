@@ -57,19 +57,19 @@ pipeline{
 
         stage('Build Docker Image'){
             agent any
-
             steps{
                 script{
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
-
-            steps{
-                script{
-                   docker.withRegistry('','docker-hub-user'){
-                       dockerImage.push()
-                   }
-                   sh "docker image rm ${dockerImage.id}"
+            post{
+                success{ 
+                    script{
+                        docker.withRegistry('','docker-hub-user'){
+                            dockerImage.push()
+                        } 
+                        sh "docker image rm ${dockerImage.id}"
+                    }
                 }
             }
         }

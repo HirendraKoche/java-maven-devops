@@ -28,8 +28,8 @@ pipeline{
                         def newIssue = [
                             fields: [
                                 project: [ key: 'JAVA' ],
-                                summary: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS',
-                                description: 'Build failed. Please check logs at ${BUILD_URL}console',
+                                summary: "${JOB_NAME} #${BUILD_NUMBER}: ${BUILD_STATUS}",
+                                description: "Build failed. Please check logs at ${BUILD_URL}console",
                                 issuetype: [ name: 'Bug' ],
                                 priority: [ name: 'High' ],
                                 components: [[ name: 'FrontEnd' ]]
@@ -40,7 +40,7 @@ pipeline{
 
                         def notify = [
 							fields: [
-								subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS',
+								subject: "$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS",
 								textBody: "Build failed. Jira issue" + jiraResponse.data.key + " has been created.",
 								htmlBody: "Build failed. Jira issue" + jiraResponse.data.key + " has been created.",
 								to: [

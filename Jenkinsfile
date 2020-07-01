@@ -67,10 +67,11 @@ pipeline{
                 success{
                     emailext to: 'hirendrakoche1@outlook.com', subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS', body: '''Hi,\nBuild process is completed. If you wanted to deploy application, please follow below link:\n${BUILD_URL}input\nPlease follow below link for Build logs:\n${BUILD_URL}console'''
 
-                input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'
+                    input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'
 
-                ansiColor('xterm'){
-                    ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/deploy/ansible/hosts', playbook: 'jenkins/deploy/ansible/deploy.yml'
+                    ansiColor('xterm'){
+                        ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/deploy/ansible/hosts', playbook: 'jenkins/deploy/ansible/deploy.yml'
+                    }
                 }
             }
         }

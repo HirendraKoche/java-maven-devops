@@ -40,7 +40,7 @@ pipeline{
 
                         jiraResponse = jiraNewIssue issue: newIssue, site: 'jira'
 
-						jiraNotifyIssue idOrKey: jiraResponse.data.key, site: 'jira' 
+						jiraNotifyIssue idOrKey: jiraResponse.data.key, notify: 'Failure' site: 'jira' 
                     }
                 }
             }

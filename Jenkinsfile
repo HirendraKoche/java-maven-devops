@@ -30,7 +30,7 @@ pipeline{
                         def newIssue = [
                             fields: [
                                 project: [ key: 'JAVA' ],
-                                summary: "${JOB_NAME} #${BUILD_NUMBER} : $BUILD_STATUS",
+                                summary: "$JOB_NAME #$BUILD_NUMBER : FAILED",
                                 description: "Build failed. Please check logs at ${BUILD_URL}console",
                                 issuetype: [ name: 'Bug' ],
                                 priority: [ name: 'High' ],

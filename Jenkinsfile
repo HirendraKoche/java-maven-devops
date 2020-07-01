@@ -38,7 +38,7 @@ pipeline{
                             ]
                         ]
 
-                        jiraResponse = jiraNewIssue issue: newIssue, site: 'jira'
+                        jiraResponse = jiraNewIssue issue: newIssue, auditLog: false, site: 'jira'
 
                         def notify = [
                             fields: [
@@ -57,19 +57,18 @@ pipeline{
 
         stage('Build Docker Image'){
             agent any
+
             steps{
                 script{
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
-            }
-            post{
-                success{ 
-                    script{
-                        docker.withRegistry('','docker-hub-user'){
-                            dockerImage.push()
-                        } 
-                        sh "docker image rm ${dockerImage.id}"
-                    }
+
+            steps{
+                script{
+                   docker.withRegistry('','docker-hub-user'){
+                       dockerImage.push()
+                   }
+                   sh "docker image rm ${dockerImage.id}"
                 }
             }
         }

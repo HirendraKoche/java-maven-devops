@@ -3,6 +3,7 @@ pipeline{
     environment{
         registry = 'hirendrakoche/java_maven_devops'
         dockerImage = ''
+        BUILD_RESULT= ''
     }
    
     agent none
@@ -24,11 +25,12 @@ pipeline{
                 success{ archiveArtifacts artifacts: '**/target/*.war, **/target/*.jar', caseSensitive: false, fingerprint: true}
                 
                 failure{
+                    BUILD_RESULT = $BUILD_STATUS
                     script{
                         def newIssue = [
                             fields: [
                                 project: [ key: 'JAVA' ],
-                                summary: """${JOB_NAME} #${BUILD_NUMBER}: ${env.BUILD_STATUS}""",
+                                summary: """${JOB_NAME} #${BUILD_NUMBER}: ${env.BUILD_RESULT}""",
                                 description: "Build failed. Please check logs at ${BUILD_URL}console",
                                 issuetype: [ name: 'Bug' ],
                                 priority: [ name: 'High' ],
@@ -40,7 +42,7 @@ pipeline{
 
                         def notify = [
 							fields: [
-								subject: """${JOB_NAME} #${BUILD_NUMBER}: ${env.BUILD_STATUS}""",
+								subject: """${JOB_NAME} #${BUILD_NUMBER}: ${env.BUILD_RESULT}""",
 								textBody: "Build failed. Jira issue" + jiraResponse.data.key + " has been created.",
 								htmlBody: "Build failed. Jira issue" + jiraResponse.data.key + " has been created.",
 								to: [

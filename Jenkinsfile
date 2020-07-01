@@ -16,7 +16,7 @@ pipeline{
                     args '-v $JENKINS_HOME/.m2:/root/.m2'
                 }
             }
-            steps{ sh 'mvn clean install' }
+            steps{ sh 'mvn clean insta' }
 
             post{
                 always{ junit '**/target/surefire-reports/*.xml' }
@@ -27,12 +27,12 @@ pipeline{
                     script{
                         def newIssue = [
                             fields: [
-                                project: [key: ''],
+                                project: [key: 'JAVA'],
                                 summary: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS',
                                 description: 'Build failed. Please check logs at ${BUILD_URL}console',
                                 issueType: [name: 'Bug'],
                                 priority: [name: 'High'],
-                                components: [[ name: 'User Interface' ]]
+                                components: [[ name: 'FrontEnd' ]]
                             ]
                         ]
 

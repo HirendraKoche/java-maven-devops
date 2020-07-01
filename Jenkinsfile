@@ -3,7 +3,7 @@ pipeline{
     environment{
         registry = 'hirendrakoche/java_maven_devops'
         dockerImage = ''
-        BUILD_RESULT= ''
+        BUILD_RESULT = ''
     }
    
     agent none
@@ -17,7 +17,10 @@ pipeline{
                     args '-v $JENKINS_HOME/.m2:/root/.m2'
                 }
             }
-            steps{ sh 'mvn clean insta' }
+            steps{ 
+                sh 'mvn clean insta'
+                BUILD_RESULT = $BUILD_STATUS
+            }
 
             post{
                 always{ junit '**/target/surefire-reports/*.xml' }
@@ -25,7 +28,6 @@ pipeline{
                 success{ archiveArtifacts artifacts: '**/target/*.war, **/target/*.jar', caseSensitive: false, fingerprint: true}
                 
                 failure{
-                    BUILD_RESULT = $BUILD_STATUS
                     script{
                         def newIssue = [
                             fields: [

@@ -75,7 +75,7 @@ pipeline{
         }
 
         stage('Notify'){
-            step{
+            steps{
                 emailext to: 'hirendrakoche1@outlook.com', subject: '$JOB_NAME #$BUILD_NUMBER: $BUILD_STATUS', body: '''Hi,\nBuild process is completed. If you wanted to deploy application, please follow below link:\n${BUILD_URL}input\nPlease follow below link for Build logs:\n${BUILD_URL}console\n\nRegards,\nJenkins Admin'''
 
                 input id:'deploy', message:'''Build process completed successfully. Do you want to proceed for deployment.''', ok: 'Deploy', submitter: 'admin, hirendra', submitterParameter: 'Approver'

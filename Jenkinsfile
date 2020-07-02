@@ -85,11 +85,9 @@ pipeline{
     post{
         success{
             node('Jenkins'){
-                stage('Deloy') {
-                    ansiColor('xterm'){
-                        ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/deploy/ansible/hosts', playbook: 'jenkins/deploy/ansible/deploy.yml'
-                    }
-                }
+                ansiColor('xterm'){
+                    ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/deploy/ansible/hosts', playbook: 'jenkins/deploy/ansible/deploy.yml'
+                }                
             }
         }
     }

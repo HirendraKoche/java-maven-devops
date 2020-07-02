@@ -1,6 +1,6 @@
 ---
    - hosts: docker-master
-
+       
      tasks:
         - name: "Create folder java_maven_devops"
           file:
@@ -9,7 +9,7 @@
 
         - name: "Copy docker-compose"
           template:
-             src: {{ WORKSPACE }}/docker-compose.yml
+             src: "{{ WORKSPACE }}/docker-compose.yml"
              dest: $HOME/java_maven_devops
         
         - name: "Deploy deock-compose"

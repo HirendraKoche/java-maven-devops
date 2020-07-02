@@ -11,6 +11,10 @@
           template:
              src: "{{ WORKSPACE }}/docker-compose.yml"
              dest: $HOME/java_maven_devops
+
+        - name: "Install docker stack dep"
+          pip:
+            name: jsondiff, pyyaml
         
         - name: "Deploy deock-compose"
           docker_stack:

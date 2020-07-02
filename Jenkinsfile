@@ -84,7 +84,7 @@ pipeline{
                 sh './jenkins/docker/deploy/updateImageInDockerCompose.sh'
 
                 ansiColor('xterm'){
-                    ansiblePlaybook colorized: true, disableHostKeyChecking: true, inventory: 'jenkins/docker/deploy/ansible/hosts', playbook: 'jenkins/docker/deploy/ansible/deploy.yml'
+                    ansiblePlaybook colorized: true, disableHostKeyChecking: true, extraVars: [WORKSPACE: "$WORKSPACE"]inventory: 'jenkins/docker/deploy/ansible/hosts', playbook: 'jenkins/docker/deploy/ansible/deploy.yml'
                 }
             }
         }

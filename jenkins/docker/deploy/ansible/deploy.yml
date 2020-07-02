@@ -14,7 +14,7 @@
         
         - name: "Deploy deock-compose"
           docker_stack:
-             stage: present
+             state: present
              name: java_maven_devops
              compose:
-                - ~/docker-compose.yml
+                - $HOME/java_maven_devops/docker-compose.yml

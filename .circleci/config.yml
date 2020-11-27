@@ -1,0 +1,33 @@
+version: 2.1
+jobs:
+    build_petclinic:
+        docker:
+            - image: maven:3.5.0
+        
+        steps:
+            - run: mvn clean package
+
+    upload_artificats:
+        steps:
+            - store_artifacts:
+                path: target/petclinic.war
+
+    upload_test_results:
+        steps:
+            - store_test_results:
+                path: target/surefire-reports/
+
+workflows:
+    version: 2.1
+    build_archieve:
+        jobs:
+            - build_petclinic
+
+            - upload_test_results
+                requires:
+                    - build_petclinic
+
+            - upload_artificats:
+                requires:
+                    - build_petclinic
+                    - upload_test_results

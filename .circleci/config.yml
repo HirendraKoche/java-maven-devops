@@ -8,11 +8,15 @@ jobs:
             - run: mvn clean package
 
     upload_artificats:
+        docker:
+            - image: maven:3.5.0
         steps:
             - store_artifacts:
                 path: target/petclinic.war
 
     upload_test_results:
+        docker:
+            - image: maven:3.5.0
         steps:
             - store_test_results:
                 path: target/surefire-reports/

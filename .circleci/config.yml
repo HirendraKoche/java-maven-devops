@@ -23,7 +23,7 @@ workflows:
         jobs:
             - build_petclinic
 
-            - upload_test_results
+            - upload_test_results:
                 requires:
                     - build_petclinic
 

@@ -5,6 +5,7 @@ jobs:
             - image: maven:3.5.0
         
         steps:
+            - checkout
             - run: mvn clean package
 
     upload_artificats:

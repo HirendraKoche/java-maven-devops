@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 jobs:
     build_petclinic:
         docker:
@@ -18,7 +18,7 @@ jobs:
                 path: target/surefire-reports/
 
 workflows:
-    version: 2.1
+    version: 2
     build_archieve:
         jobs:
             - build_petclinic

@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('Buzz Build') {
       steps {
-        archiveArtifacts(artifacts: 'my-app.zip', fingerprint: true, allowEmptyArchive: true)
-        archiveArtifacts(artifacts: 'images/*.png', allowEmptyArchive: true, fingerprint: true)
+        tool 'maven'
+        sh 'mvn clean package'
         archiveArtifacts(artifacts: 'target/**/*.jar', allowEmptyArchive: true, fingerprint: true)
       }
     }

@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Buzz Build') {
       steps {
-        sh './jenkins/docker/build/build.sh'
+        archiveArtifacts(artifacts: 'my-app.zip', fingerprint: true, allowEmptyArchive: true)
+        archiveArtifacts(artifacts: 'images/*.png', allowEmptyArchive: true, fingerprint: true)
+        archiveArtifacts(artifacts: 'target/**/*.jar', allowEmptyArchive: true, fingerprint: true)
       }
     }
 

@@ -2,25 +2,16 @@ pipeline {
   agent any
   stages {
     stage('Fluffy Build') {
-      parallel {
-        stage('Fluffy Build') {
-          steps {
-            echo 'Placeholder'
-          }
-        }
-
-        stage('Fluffy Build - 1') {
-          steps {
-            echo 'Fluffy Build'
-          }
-        }
-
+      steps {
+        sh '''sleep 5
+echo Success!'''
       }
     }
 
     stage('Fluffy Test') {
       steps {
-        echo 'Fluffy Build'
+        echo 'Placeholder'
+        sh 'echo Another Placeholder'
       }
     }
 

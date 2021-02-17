@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('Build 7') {
           steps {
-            sh 'echo "Branch ${env.GIT_BRANCH}, commit ${env.GIT_COMMIT.substring(0,7)}"'
+            sh 'echo "Branch ${ env.GIT_BRANCH }, commit ${ env.GIT_COMMIT.substring(0,7) }"'
           }
         }
 

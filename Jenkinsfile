@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('Build 7') {
           steps {
-            sh 'echo $GIT_BRANCH, $GIT_COMMIT'
+            sh 'echo $GIT_BRANCH, $GIT_COMMIT[0:6]'
             echo "Finished run for commit ${ env.GIT_COMMIT.substring(0,6) }"
           }
         }

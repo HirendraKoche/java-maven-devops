@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('Build 7') {
           steps {
-            sh 'env'
+            sh 'echo ${GIT_COMMIT:0:7}'
           }
         }
 

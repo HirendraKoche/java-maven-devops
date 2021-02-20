@@ -1,69 +1,16 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      parallel {
-        stage('Build 7') {
-          steps {
-            sh 'echo ${GIT_COMMIT:0:7}'
-          }
-        }
-
-        stage('Build 8') {
-          steps {
-            echo 'Build Java 8'
-          }
-        }
-
-      }
-    }
-
-    stage('Test') {
-      parallel {
-        stage('Test 1') {
-          steps {
-            echo 'Test 1'
-          }
-        }
-
-        stage('Test 2') {
-          steps {
-            echo 'Test 2'
-          }
-        }
-
-        stage('Test 3') {
-          steps {
-            echo 'Test 3'
-          }
-        }
-
-        stage('error') {
-          steps {
-            echo 'Test 4'
-          }
-        }
-
-      }
-    }
-
-    stage('Code Deploy to Staging') {
-      when {
-        branch 'master'
-      }
+    stage('Initialize') {
       steps {
-        input(message: 'Deploy to Stage', ok: 'Yes, let\'s do it!')
+        sh '''echo "Maven Version: $(mvn version)"
+echo "Path --> $PATH"
+echo "M2_Home --> $M2_HOME"'''
       }
     }
 
-    stage('Deploy to Staging') {
-      when {
-        branch 'master'
-      }
-      steps {
-        echo 'Deploy to Stage'
-      }
-    }
-
+  }
+  tools {
+    maven 'maven'
   }
 }

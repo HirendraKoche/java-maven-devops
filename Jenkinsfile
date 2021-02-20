@@ -1,16 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('Initialize') {
+    stage('Build') {
       steps {
-        sh '''gradle -v
-              echo "$PATH"
-           '''
+        sh 'mvn clean build'
       }
     }
 
   }
   tools {
-    gradle 'gradle'
+    maven 'maven'
   }
 }

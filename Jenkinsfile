@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
-        sh '''echo "Maven Version: $(mvn version)"
-echo "Path --> $PATH"
+        sh '''echo "Maven Version: $(mvn -version)"
 echo "M2_Home --> $M2_HOME"'''
       }
     }

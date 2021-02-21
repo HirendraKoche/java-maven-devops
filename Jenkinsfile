@@ -1,12 +1,15 @@
 pipeline {
 	agent any
 	
-	tools {
-		maven 'maven 3.3.9'
+	parameters {
+		string defaultValue: 'DEV', description: 'Environment name on which deployment will be initiated.', name: 'DEPLOY_TO', trim: false
 	}
-	
+
 	stages {
 		stage("Build Code") {
+			tools {
+					maven 'maven 3.3.9'
+			}
 			parallel {
 				stage("Build with Java8") {
 					tools {

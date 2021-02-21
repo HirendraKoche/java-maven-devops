@@ -31,7 +31,7 @@ pipeline {
 				}
 				always {
 					junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-					jacoco classPattern: '**/target/classes', inclusionPattern: '**/**.exec'
+					//jacoco classPattern: '**/target/classes', inclusionPattern: '**/**.exec'
 				}
 			}
 		}	

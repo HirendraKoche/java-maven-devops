@@ -27,10 +27,11 @@ pipeline {
 			}
 			post {
 				success {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+					archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/*.jar,**/target/*.war', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
 				}
 				always {
 					junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+					jacoco classPattern: '**/target/classes', inclusionPattern: '**/**.exec'
 				}
 			}
 		}	

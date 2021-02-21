@@ -31,10 +31,31 @@ pipeline {
 				}
 				always {
 					junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-					//jacoco classPattern: '**/target/classes', inclusionPattern: '**/**.exec'
+					jacoco classPattern: '**/target/classes', inclusionPattern: '**/**.exec'
 				}
 			}
-		}	
+		}
 		
+		stage("Wait for Approval") {
+			agent none
+			
+			options {
+				timeout(time: 1, unit: 'DAYS')
+			}
+			
+			steps {
+				input message: 'Package is Ready to Deploy. Shall I deploy it?', ok: 'Ok. Let\'s do it!'
+			}
+		}
+		
+		stage("Deploy") {
+			when {
+				branch 'master'
+			}
+			
+			steps {
+				echo "Code Deployeed successfully."
+			}
+		}
 	}
 }

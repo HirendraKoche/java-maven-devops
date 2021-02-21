@@ -15,7 +15,15 @@ pipeline {
 					steps {
 						sh 'mvn clean package'
 					}
-				}
+				} post {
+					success {
+						archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/*.jar', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+					}
+					always {
+						junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+					}
+				 }
+				 
 				stage("Build with Java9") {
 					tools {
 						jdk 'java9'
@@ -23,16 +31,15 @@ pipeline {
 					steps {
 						sh 'mvn clean package'
 					}
-				}
-			}
-		} 
-		post {
-			success {
-				archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/*.jar', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
-			}
-			always {
-				junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-			}
+				} post {
+					success {
+						archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/*.jar', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+					}
+					always {
+						junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+					}
+				 }
+			}		
 		}
 	}
 }

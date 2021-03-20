@@ -5,11 +5,16 @@ pipeline {
 		maven 'maven 3.3.9'
 	}
 	
+	parameters {
+		string defaultValue: 'DEV', description: 'Environment name on which deployment will be initiated.', name: 'DEPLOY_TO', trim: false
+	}
+  
 	stages {
 		stage("Build Code") {
 			parallel {
 				stage("Build with Java8") {
 					tools {
+						maven 'maven 3.3.9'
 						jdk 'java8'
 					}
 					steps {
@@ -19,6 +24,7 @@ pipeline {
 				stage("Build with Java9") {
 					tools {
 						jdk 'java9'
+						maven 'maven 3.3.9'
 					}
 					steps {
 						sh 'mvn clean package'

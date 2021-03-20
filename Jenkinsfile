@@ -3,7 +3,6 @@ pipeline {
 	
 	tools {
 		maven 'maven 3.3.9'
-		Test
 	}
 	
 	parameters {

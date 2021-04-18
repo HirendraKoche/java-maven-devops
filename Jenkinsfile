@@ -14,22 +14,14 @@ pipeline {
 			parallel {
 				stage("Build with Java8") {
 					tools {
-						maven 'maven 3.3.9'
-						jdk 'java8'
+						maven 'mvn3'
+						jdk 'jdk8'
 					}
 					steps {
 						sh 'mvn clean package'
 					}
 				}
-				stage("Build with Java9") {
-					tools {
-						jdk 'java9'
-						maven 'maven 3.3.9'
-					}
-					steps {
-						sh 'mvn clean package'
-					}
-				}
+				
 			}
 			post {
 				success {

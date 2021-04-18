@@ -44,6 +44,7 @@ pipeline {
   }
   tools {
     maven 'mvn3'
+    jdk 'jdk8'
   }
   parameters {
     string(defaultValue: 'DEV', description: 'Environment name on which deployment will be initiated.', name: 'DEPLOY_TO', trim: false)

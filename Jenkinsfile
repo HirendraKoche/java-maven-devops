@@ -16,7 +16,7 @@ pipeline {
       parallel {
         stage('Build with Java8') {
           steps {
-            sh 'mvn clean package'
+            bat 'mvn clean package'
           }
         }
 

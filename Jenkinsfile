@@ -11,7 +11,7 @@ pipeline {
 
           }
           steps {
-            echo 'Build on agent Java 7'
+            bat 'mvn clean package -DskipTests'
           }
         }
 
@@ -23,7 +23,7 @@ pipeline {
 
           }
           steps {
-            echo 'Build on agent Java 8'
+            bat 'mvn clean package -DskipTests'
           }
         }
 
@@ -40,7 +40,7 @@ pipeline {
 
           }
           steps {
-            echo 'Test for agent Java 7'
+            bat 'mvn test'
           }
         }
 
@@ -53,6 +53,7 @@ pipeline {
           }
           steps {
             echo 'Test on Java 8'
+            bat 'mvn test'
           }
         }
 

@@ -79,10 +79,10 @@ pipeline {
             skipDefaultCheckout()
           }
           steps {
-            bat '''mkdir **/target/java7
-                        mv **/target/*.jar **/target/java7
-                        mv **/target/*.war **/target/java7'''
-            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/java7/*.jar, **/target/java7/*.war', fingerprint: true, onlyIfSuccessful: true)
+            powershell '''New-Item -ItemType Directory -Name java7
+                        copy-item */target/*.jar java7
+                        copy-item */target/*.war java7'''
+            archiveArtifacts(allowEmptyArchive: true, artifacts: 'java7/*.jar, java7/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
 
@@ -97,10 +97,10 @@ pipeline {
             skipDefaultCheckout()
           }
           steps {
-            bat '''mkdir **/target/java8
-                        mv **/target/*.jar **/target/java8
-                         mv **/target/*.war **/target/java8'''
-            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/java8/*.jar, **/target/java8/*.war', fingerprint: true, onlyIfSuccessful: true)
+            powershell '''New-Item -ItemType Directory -Name java8
+                        copy-item */target/*.jar java8
+                        copy-item */target/*.war java8'''
+            archiveArtifacts(allowEmptyArchive: true, artifacts: 'java8/*.jar, java8/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
 

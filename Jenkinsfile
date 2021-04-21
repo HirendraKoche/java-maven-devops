@@ -33,6 +33,10 @@ pipeline {
     stage('Test') {
       post {
         success {
+          agent() {
+            label 'java7 || java8'
+          }
+
           archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false)
         }
 

@@ -1,15 +1,68 @@
 pipeline {
-  agent any
+  agent none
   stages {
-    stage('Check CREDS details') {
-      steps {
-        echo "Service user - ${GIT_CRDS_USR}"
-        echo "Service user passwrod - ${GIT_CRDS_PSW}"
+    stage('Build') {
+      parallel {
+        stage('on Java 7') {
+          agent any
+          steps {
+            echo 'Build on agent Java 7'
+          }
+        }
+
+        stage('on Java 8') {
+          agent any
+          steps {
+            echo 'Build on agent Java 8'
+          }
+        }
+
       }
     }
 
-  }
-  environment {
-    GIT_CRDS = credentials('gituser')
+    stage('Test') {
+      parallel {
+        stage('Test Java 7') {
+          agent any
+          steps {
+            echo 'Test for agent Java 7'
+          }
+        }
+
+        stage('Test Java 8') {
+          agent any
+          steps {
+            echo 'Test on Java 8'
+          }
+        }
+
+      }
+    }
+
+    stage('Wait for Approval') {
+      steps {
+        input(message: 'Approval for deployment', ok: 'Deploy')
+      }
+    }
+
+    stage('Deploy') {
+      parallel {
+        stage('Deploy Java 7') {
+          agent any
+          steps {
+            echo 'Deploy Java 7 application'
+          }
+        }
+
+        stage('Deploy Java 8') {
+          agent any
+          steps {
+            echo 'Deploy Java 8 application'
+          }
+        }
+
+      }
+    }
+
   }
 }

@@ -31,6 +31,12 @@ pipeline {
     }
 
     stage('Test') {
+      post {
+        success {
+          archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false)
+        }
+
+      }
       parallel {
         stage('Test Java 7') {
           agent {

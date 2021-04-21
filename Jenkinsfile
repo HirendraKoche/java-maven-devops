@@ -31,16 +31,6 @@ pipeline {
     }
 
     stage('Test') {
-      post {
-        success {
-          agent() {
-            label 'java7 || java8'
-          }
-
-          archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false)
-        }
-
-      }
       parallel {
         stage('Test Java 7') {
           agent {
@@ -70,6 +60,41 @@ pipeline {
           steps {
             echo 'Test on Java 8'
             bat 'mvn test'
+          }
+        }
+
+      }
+    }
+
+    stage('Archieve Artifacts') {
+      parallel {
+        stage('Java 7 Artifacts') {
+          agent {
+            node {
+              label 'java7'
+            }
+
+          }
+          options {
+            skipDefaultCheckout()
+          }
+          steps {
+            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true, onlyIfSuccessful: true)
+          }
+        }
+
+        stage('Java 8 Artifacts') {
+          agent {
+            node {
+              label 'java8'
+            }
+
+          }
+          options {
+            skipDefaultCheckout()
+          }
+          steps {
+            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
 

@@ -99,4 +99,7 @@ pipeline {
     }
 
   }
+  tools {
+    maven 'mvn3'
+  }
 }

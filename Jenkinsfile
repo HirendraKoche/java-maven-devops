@@ -31,9 +31,6 @@ pipeline {
     }
 
     stage('Test') {
-      options {
-        skipDefaultCheckout()
-      }
       parallel {
         stage('Test Java 7') {
           agent {
@@ -41,6 +38,9 @@ pipeline {
               label 'java7'
             }
 
+          }
+          options {
+            skipDefaultCheckout()
           }
           steps {
             bat 'mvn test'
@@ -53,6 +53,9 @@ pipeline {
               label 'java8'
             }
 
+          }
+          options {
+            skipDefaultCheckout()
           }
           steps {
             echo 'Test on Java 8'

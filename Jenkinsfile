@@ -41,7 +41,10 @@ pipeline {
 
     stage('Wait for Approval') {
       steps {
-        input(message: 'Approval for deployment', ok: 'Deploy')
+        timeout(time: 1, unit: 'DAYS') {
+          input(message: 'Deploy?', ok: 'Deploy')
+        }
+
       }
     }
 

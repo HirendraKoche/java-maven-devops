@@ -79,7 +79,10 @@ pipeline {
             skipDefaultCheckout()
           }
           steps {
-            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true, onlyIfSuccessful: true)
+            bat '''mkdir **/target/java7
+                        mv **/target/*.jar **/target/java7
+                        mv **/target/*.war **/target/java7'''
+            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/java7/*.jar, **/target/java7/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
 
@@ -94,7 +97,10 @@ pipeline {
             skipDefaultCheckout()
           }
           steps {
-            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/*.jar, **/target/*.war', fingerprint: true, onlyIfSuccessful: true)
+            bat '''mkdir **/target/java8
+                        mv **/target/*.jar **/target/java8
+                         mv **/target/*.war **/target/java8'''
+            archiveArtifacts(allowEmptyArchive: true, artifacts: '**/target/java8/*.jar, **/target/java8/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
 

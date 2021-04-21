@@ -4,14 +4,24 @@ pipeline {
     stage('Build') {
       parallel {
         stage('on Java 7') {
-          agent any
+          agent {
+            node {
+              label 'java7'
+            }
+
+          }
           steps {
             echo 'Build on agent Java 7'
           }
         }
 
         stage('on Java 8') {
-          agent any
+          agent {
+            node {
+              label 'java8'
+            }
+
+          }
           steps {
             echo 'Build on agent Java 8'
           }
@@ -23,14 +33,24 @@ pipeline {
     stage('Test') {
       parallel {
         stage('Test Java 7') {
-          agent any
+          agent {
+            node {
+              label 'java7'
+            }
+
+          }
           steps {
             echo 'Test for agent Java 7'
           }
         }
 
         stage('Test Java 8') {
-          agent any
+          agent {
+            node {
+              label 'java8'
+            }
+
+          }
           steps {
             echo 'Test on Java 8'
           }
@@ -51,14 +71,24 @@ pipeline {
     stage('Deploy') {
       parallel {
         stage('Deploy Java 7') {
-          agent any
+          agent {
+            node {
+              label 'java7'
+            }
+
+          }
           steps {
             echo 'Deploy Java 7 application'
           }
         }
 
         stage('Deploy Java 8') {
-          agent any
+          agent {
+            node {
+              label 'java8'
+            }
+
+          }
           steps {
             echo 'Deploy Java 8 application'
           }

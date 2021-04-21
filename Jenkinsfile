@@ -39,6 +39,9 @@ pipeline {
             }
 
           }
+          options {
+            skipDefaultCheckout()
+          }
           steps {
             bat 'mvn test'
           }
@@ -50,6 +53,9 @@ pipeline {
               label 'java8'
             }
 
+          }
+          options {
+            skipDefaultCheckout()
           }
           steps {
             echo 'Test on Java 8'

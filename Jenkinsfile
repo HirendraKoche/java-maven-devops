@@ -42,6 +42,17 @@ pipeline {
           options {
             skipDefaultCheckout()
           }
+          post {
+            success {
+              powershell '''
+                New-Item -ItemType Directory -Name java7
+                copy-item */target/*.jar java7
+                copy-item */target/*.war java7
+              '''
+              archiveArtifacts(allowEmptyArchive: true, artifacts: 'java7/*.jar, java7/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false, onlyIfSuccessful: true)
+            }
+
+          }
           steps {
             bat 'mvn test'
           }
@@ -57,50 +68,20 @@ pipeline {
           options {
             skipDefaultCheckout()
           }
+          post {
+            success {
+              powershell '''
+                New-Item -ItemType Directory -Name java8
+                copy-item */target/*.jar java8
+                copy-item */target/*.war java8
+              '''
+              archiveArtifacts(allowEmptyArchive: true, artifacts: 'java8/*.jar, java8/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false, onlyIfSuccessful: true)
+            }
+
+          }
           steps {
             echo 'Test on Java 8'
             bat 'mvn test'
-          }
-        }
-
-      }
-    }
-
-    stage('Archieve Artifacts') {
-      parallel {
-        stage('Java 7 Artifacts') {
-          agent {
-            node {
-              label 'java7'
-            }
-
-          }
-          options {
-            skipDefaultCheckout()
-          }
-          steps {
-            powershell '''New-Item -ItemType Directory -Name java7
-                        copy-item */target/*.jar java7
-                        copy-item */target/*.war java7'''
-            archiveArtifacts(allowEmptyArchive: true, artifacts: 'java7/*.jar, java7/*.war', fingerprint: true, onlyIfSuccessful: true)
-          }
-        }
-
-        stage('Java 8 Artifacts') {
-          agent {
-            node {
-              label 'java8'
-            }
-
-          }
-          options {
-            skipDefaultCheckout()
-          }
-          steps {
-            powershell '''New-Item -ItemType Directory -Name java8
-                        copy-item */target/*.jar java8
-                        copy-item */target/*.war java8'''
-            archiveArtifacts(allowEmptyArchive: true, artifacts: 'java8/*.jar, java8/*.war', fingerprint: true, onlyIfSuccessful: true)
           }
         }
 

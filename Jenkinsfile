@@ -1,100 +1,46 @@
 pipeline {
   agent none
   stages {
-    stage('Build') {
-      parallel {
-        stage('on Java 7') {
-          agent {
-            node {
-              label 'java7'
-            }
-
-          }
-          options {
-            skipDefaultCheckout()
-          }
-          steps {
-            cleanWs()
-            checkout scm
-            bat 'mvn clean package -DskipTests'
-          }
-        }
-
-        stage('on Java 8') {
-          agent {
-            node {
-              label 'java8'
-            }
-
-          }
-          options {
-            skipDefaultCheckout()
-          }
-          steps {
-            cleanWs()
-            checkout scm
-            bat 'mvn clean package -DskipTests'
-          }
+    stage('on Java 7') {
+      agent {
+        node {
+          label 'java7'
         }
 
       }
+      options {
+        skipDefaultCheckout()
+      }
+      steps {
+        cleanWs(deleteDirs: true)
+        checkout(scm: scm, poll: true, changelog: true)
+        bat 'mvn clean package -DskipTests'
+      }
     }
 
-    stage('Test') {
-      parallel {
-        stage('Test Java 7') {
-          agent {
-            node {
-              label 'java7'
-            }
+    stage('Test Java 7') {
+      agent {
+        node {
+          label 'java7'
+        }
 
-          }
-          options {
-            skipDefaultCheckout()
-          }
-          post {
-            success {
-              powershell '''
+      }
+      options {
+        skipDefaultCheckout()
+      }
+      post {
+        success {
+          powershell '''
                 New-Item -ItemType Directory -Name java7
                 copy-item */target/*.jar java7
                 copy-item */target/*.war java7
               '''
-              archiveArtifacts(allowEmptyArchive: true, artifacts: 'java7/*.jar, java7/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false, onlyIfSuccessful: true)
-            }
-
-          }
-          steps {
-            bat 'mvn test'
-          }
+          archiveArtifacts(allowEmptyArchive: true, artifacts: 'java7/*.jar, java7/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false, onlyIfSuccessful: true)
         }
 
-        stage('Test Java 8') {
-          agent {
-            node {
-              label 'java8'
-            }
-
-          }
-          options {
-            skipDefaultCheckout()
-          }
-          post {
-            success {
-              powershell '''
-                New-Item -ItemType Directory -Name java8
-                copy-item */target/*.jar java8
-                copy-item */target/*.war java8
-              '''
-              archiveArtifacts(allowEmptyArchive: true, artifacts: 'java8/*.jar, java8/*.war', caseSensitive: false, fingerprint: true, followSymlinks: false, onlyIfSuccessful: true)
-            }
-
-          }
-          steps {
-            echo 'Test on Java 8'
-            bat 'mvn test'
-          }
-        }
-
+      }
+      steps {
+        bat 'mn test'
       }
     }
 
@@ -107,32 +53,15 @@ pipeline {
       }
     }
 
-    stage('Deploy') {
-      parallel {
-        stage('Deploy Java 7') {
-          agent {
-            node {
-              label 'java7'
-            }
-
-          }
-          steps {
-            echo 'Deploy Java 7 application'
-          }
+    stage('Deploy Java 7') {
+      agent {
+        node {
+          label 'java7'
         }
 
-        stage('Deploy Java 8') {
-          agent {
-            node {
-              label 'java8'
-            }
-
-          }
-          steps {
-            echo 'Deploy Java 8 application'
-          }
-        }
-
+      }
+      steps {
+        echo 'Deploy Java 7 application'
       }
     }
 

@@ -54,7 +54,7 @@ pipeline {
 
           }
           steps {
-            bat 'mn test'
+            bat 'mvn test'
           }
         }
 

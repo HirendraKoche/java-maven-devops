@@ -1,12 +1,6 @@
 pipeline {
   agent none
   stages {
-    stage('Clean Workspace') {
-      steps {
-        cleanWs()
-      }
-    }
-
     stage('Build') {
       parallel {
         stage('on Java 7') {
@@ -16,7 +10,12 @@ pipeline {
             }
 
           }
+          options {
+            skipDefaultCheckout()
+          }
           steps {
+            cleanWs()
+            checkout scm
             bat 'mvn clean package -DskipTests'
           }
         }
@@ -28,7 +27,12 @@ pipeline {
             }
 
           }
+          options {
+            skipDefaultCheckout()
+          }
           steps {
+            cleanWs()
+            checkout scm
             bat 'mvn clean package -DskipTests'
           }
         }

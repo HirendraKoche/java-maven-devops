@@ -11,7 +11,7 @@ pipeline {
 
           }
           steps {
-            bat 'mvn clean package -DskipTests'
+            bat 'mn clean package -DskipTests'
           }
         }
 
@@ -130,5 +130,8 @@ pipeline {
   tools {
     jdk 'jdk8'
     maven 'mvn3'
+  }
+  options {
+    parallelsAlwaysFailFast()
   }
 }

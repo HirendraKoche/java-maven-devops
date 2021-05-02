@@ -1,6 +1,12 @@
 pipeline {
   agent none
   stages {
+    stage('Clean Workspace') {
+      steps {
+        cleanWs()
+      }
+    }
+
     stage('Build') {
       parallel {
         stage('on Java 7') {

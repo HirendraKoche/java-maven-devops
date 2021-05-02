@@ -11,7 +11,7 @@ pipeline {
 
           }
           steps {
-            bat 'mn clean package -DskipTests'
+            bat 'mvn clean package -DskipTests'
           }
         }
 
@@ -54,7 +54,7 @@ pipeline {
 
           }
           steps {
-            bat 'mvn test'
+            bat 'mn test'
           }
         }
 

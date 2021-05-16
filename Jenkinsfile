@@ -10,6 +10,7 @@ pipeline {
         label 'windows'
       }
       tools {
+        jdk 'jdk8'
         maven 'mvn3'
       }
       steps {

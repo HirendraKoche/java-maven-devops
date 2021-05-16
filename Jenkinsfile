@@ -15,7 +15,7 @@ pipeline {
       steps {
         deleteDir()
         checkout scm
-        sh 'mvn clean compile'
+        bat 'mvn clean compile'
       }
     }
   }
